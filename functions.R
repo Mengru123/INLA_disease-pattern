@@ -12,7 +12,26 @@ tbl_for_plot = function(inla_model, n, n_var){
     return(data.test)
 }
 
+plot_disease_effect = function (df,var_x, var_y, labels_dis, n_dis, title){
+    ggplot(df, aes_string(x = var_x, y = var_y)) +
+        geom_point(size = 3, shape = 15) +
+        geom_abline(intercept = 1, slope = 0, linetype = "dotted", size = 1) +
+        geom_errorbar(aes(ymin = li, ymax = ui), size = 1, width = 0.3) +
+        labs(x = "disease", y = "Exp_disease_effect", title = title) +
+        scale_x_discrete(name = "Diseases", limits = c(1:n_dis), labels = labels_dis) +
+        theme(axis.text = element_text(size =10)) 
+}
 
+plot_clsc_effect = function (df,var_x, var_y, labels_clsc, n_clsc,title) {
+    ggplot(df, aes_string(var_x, var_y)) +
+        geom_point(size = 3, shape = 15) +
+        geom_abline(intercept = 1, slope = 0, linetype = "dotted", size = 1) +
+        geom_errorbar(aes(ymin = li, ymax = ui), size = 1, width = 0.3) +
+        labs(x = "CLSC", y = "Exp_CLSC_effect", title = title) +
+        scale_x_discrete(name = "CLSC", limits = c(1:n_clsc), labels = labels_clsc) +
+        theme(axis.text = element_text(size =10), 
+              axis.text.x = element_text(angle = 45, hjust = 1)) 
+}
 # original code for creating the data to plot
 # disease.0 <- matrix(NA,1000,8)
 # for(i in 1:8){
